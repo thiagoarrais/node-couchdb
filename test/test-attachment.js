@@ -40,7 +40,11 @@ couchdb
       db.getAttachment('logo-doc', 'logo.png', function (er, r) {
         callbacks.E = true;
         assert.equal(3010, r.length);
-      })
+      });
+
+      db.getStreamingAttachment('logo-doc', 'logo.png', function (er, r) {
+        if (er) throw new Error(JSON.stringify(er));
+      });
     });
   });
 
@@ -64,3 +68,4 @@ db.saveAttachment(
 process.addListener('exit', function() {
   checkCallbacks(callbacks);
 });
+
