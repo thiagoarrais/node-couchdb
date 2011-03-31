@@ -256,7 +256,17 @@ Delete attachment `attachmentId` from doc `docId` with `docRev`.
 
 ### db.getAttachment(docId, attachmentId, cb)
 
-Loads the attachment `attachmentId` from `docId`. The callback receivesthe binary content of the attachment. There is no streaming, don't use this with large files.
+Loads the attachment `attachmentId` from `docId`. The callback receives the binary content of the attachment. There is no streaming, don't use this with large files.
+
+### db.getStreamingAttachment(docId, attachmentId)
+
+Loads the attachment `attachmentId` from `docId`. Returns a stream that can be
+listened for the content of the attachment. The stream provides data, end and
+error events. Example:
+
+    stream = db.getStreamingAttachment('my-doc', 'my-attachment');
+    stream.on('data', function(chunk) { file.write(chunk, 'binary'); });
+    stream.on('end', function(chunk) { file.end(); });
 
 ### db.allDocs(query)
 
